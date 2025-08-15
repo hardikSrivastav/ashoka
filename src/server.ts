@@ -18,12 +18,15 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
     reply.header('X-API-Version', 'v1');
   });
 
-  registerHealthRoutes(app);
-  registerCourseRoutes(app, getIndices);
-  registerSectionRoutes(app, getIndices);
-  registerFacultyRoutes(app, getIndices);
-  registerAdminRoutes(app, { csvDir, setIndices: (i) => { (getIndices as any).set?.(i); } });
-  registerRecommendationRoutes(app, getIndices);
+  // Register routes with /api prefix
+  app.register(async function (fastify) {
+    registerHealthRoutes(fastify);
+    registerCourseRoutes(fastify, getIndices);
+    registerSectionRoutes(fastify, getIndices);
+    registerFacultyRoutes(fastify, getIndices);
+    registerAdminRoutes(fastify, { csvDir, setIndices: (i) => { (getIndices as any).set?.(i); } });
+    registerRecommendationRoutes(fastify, getIndices);
+  }, { prefix: '/api' });
 
   return app;
 }

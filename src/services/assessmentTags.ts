@@ -9,8 +9,21 @@ let keywords: KeywordConfig = {};
 
 export function loadKeywords(configDir: string): void {
   const file = path.join(configDir, 'keywords.json');
-  const raw = fs.readFileSync(file, 'utf8');
-  keywords = JSON.parse(raw);
+  try {
+    const raw = fs.readFileSync(file, 'utf8');
+    keywords = JSON.parse(raw);
+  } catch (error) {
+    console.warn(`Could not load keywords from ${file}:`, error);
+    // Provide default keywords if file is missing
+    keywords = {
+      projects: ['project', 'portfolio', 'presentation', 'creative', 'design'],
+      exams: ['exam', 'test', 'midterm', 'final', 'quiz'],
+      assignments: ['assignment', 'homework', 'essay', 'paper', 'report'],
+      reading_load: ['reading', 'book', 'text', 'literature', 'pages'],
+      discussion_seminar: ['discussion', 'seminar', 'participation', 'debate', 'forum'],
+      labs: ['lab', 'laboratory', 'experiment', 'practical', 'hands-on']
+    };
+  }
 }
 
 export function extractAssessmentTags(texts: Array<string | undefined | null>): AssessmentTag[] {

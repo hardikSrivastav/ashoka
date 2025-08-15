@@ -13,21 +13,26 @@ async function getServer() {
     return cachedServer;
   }
 
-  const csvDir = process.env.CSV_DIR ?? 'good csvs';
-  loadKeywords('config');
+  try {
+    const csvDir = process.env.CSV_DIR ?? 'good csvs';
+    loadKeywords('config');
 
-  if (!indices) {
-    const data = await loadAll(csvDir);
-    indices = buildIndices(data);
+    if (!indices) {
+      const data = await loadAll(csvDir);
+      indices = buildIndices(data);
+    }
+
+    const getIndices = () => indices!;
+    (getIndices as any).set = (i: Indices) => { indices = i; };
+
+    cachedServer = buildServer(getIndices, csvDir);
+    await cachedServer.ready();
+    
+    return cachedServer;
+  } catch (error) {
+    console.error('Failed to initialize server:', error);
+    throw error;
   }
-
-  const getIndices = () => indices!;
-  (getIndices as any).set = (i: Indices) => { indices = i; };
-
-  cachedServer = buildServer(getIndices, csvDir);
-  await cachedServer.ready();
-  
-  return cachedServer;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

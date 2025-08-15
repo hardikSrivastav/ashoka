@@ -18,6 +18,10 @@ dist/
 api/*.js
 *.js.map
 
+# Include config files and data
+!config/
+!good csvs/
+
 # IDE files
 .vscode/
 .idea/

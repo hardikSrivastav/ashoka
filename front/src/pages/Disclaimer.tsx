@@ -9,7 +9,7 @@ export default function DisclaimerPage() {
         <pre className="whitespace-pre-wrap text-sm bg-muted/30 p-4 rounded border">{String(disclaimer)}</pre>
       </div>
       <div className="mt-6 text-center text-xs text-muted-foreground">
-        <a className="underline" href="https://www.hardiksrivastava.com" target="_blank" rel="noreferrer">hardik srivastava</a> · °
+        <a className="underline" href="https://www.hardiksrivastava.com" target="_blank" rel="noreferrer">hardik srivastava</a>
       </div>
     </div>
   );

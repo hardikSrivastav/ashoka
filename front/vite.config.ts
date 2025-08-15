@@ -9,12 +9,12 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 3002,
     proxy: {
-      "/health": "http://localhost:3000",
-      "/courses": "http://localhost:3000",
-      "/sections": "http://localhost:3000",
-      "/faculties": "http://localhost:3000",
-      "/recommendations": "http://localhost:3000",
-      "/admin": "http://localhost:3000"
+      "/api/health": "http://localhost:3000",
+      "/api/courses": "http://localhost:3000",
+      "/api/sections": "http://localhost:3000",
+      "/api/faculties": "http://localhost:3000",
+      "/api/recommendations": "http://localhost:3000",
+      "/api/admin": "http://localhost:3000"
     }
   },
   build: {

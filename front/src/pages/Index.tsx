@@ -605,7 +605,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6 font-mono">
+    <div className="min-h-screen bg-background p-4 md:p-6 font-mono">
       <div className="max-w-7xl mx-auto">
         <CourseHeader 
           totalCourses={totalCourses}
@@ -614,7 +614,32 @@ const Index = () => {
           data={courseData}
           onDownloadCSV={handleDownloadCSV}
         />
-        <CourseTable data={courseData} />
+        {/* Mobile: condensed list cards */}
+        <div className="md:hidden mt-4 space-y-2">
+          {courseData.map((c) => (
+            <div key={`${c.ScheduleSysGenId}-${c.LSNo}`} className="border rounded p-3 bg-card text-card-foreground">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold truncate" title={c.Title}>{c.Title}</div>
+                  <div className="mt-1 text-xs text-muted-foreground flex items-center gap-2">
+                    <code className="bg-muted px-1.5 py-0.5 rounded">{c.Code}</code>
+                    <span className="truncate" title={c.LSCode}>{c.LSCode}</span>
+                  </div>
+                  {c.Faculty && (
+                    <div className="mt-1 text-[11px] text-muted-foreground line-clamp-2" title={c.Faculty}>{c.Faculty}</div>
+                  )}
+                </div>
+                <span className={`shrink-0 text-[10px] px-2 py-0.5 rounded border ${c.isCatalogueExist === 1 ? 'bg-green-100 text-green-800 border-green-200' : 'bg-amber-100 text-amber-800 border-amber-200'}`}>
+                  {c.isCatalogueExist === 1 ? 'ACTIVE' : 'INACTIVE'}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Desktop: full table remains unchanged */}
+        <div className="hidden md:block">
+          <CourseTable data={courseData} />
+        </div>
         <Footer />
       </div>
     </div>

@@ -107,7 +107,7 @@ const CourseRecommendation = () => {
         formAnswers,
         options: { numPreferredSections: 5, detailedExplanations: true }
       };
-      const res = await fetch('/recommendations', {
+      const res = await fetch('/api/recommendations', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
       });
       const text = await res.text();
