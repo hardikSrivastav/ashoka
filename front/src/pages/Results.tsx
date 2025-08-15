@@ -23,7 +23,23 @@ export default function ResultsPage() {
   let parsed: any = null;
   try { parsed = JSON.parse(payload); } catch {}
 
-  if (!parsed || !Array.isArray(parsed.rankedCourses)) {
+  // Combine all course arrays into a single array for display
+  const allCourses: any[] = [];
+  if (parsed) {
+    if (Array.isArray(parsed.rankedCourses)) {
+      allCourses.push(...parsed.rankedCourses);
+    } else {
+      // Handle legacy format with preferredCourses and notPreferredCourses
+      if (Array.isArray(parsed.preferredCourses)) {
+        allCourses.push(...parsed.preferredCourses);
+      }
+      if (Array.isArray(parsed.notPreferredCourses)) {
+        allCourses.push(...parsed.notPreferredCourses);
+      }
+    }
+  }
+
+  if (!parsed || allCourses.length === 0) {
     return (
       <div className="min-h-screen bg-background p-6 font-mono">
         <div className="max-w-7xl mx-auto space-y-4">
@@ -46,13 +62,6 @@ export default function ResultsPage() {
             <a className="underline" href="/faculty">Faculty</a>
           </div>
         </div>
-        {parsed.tableMarkdown ? (
-          <Card className="p-3 mb-4">
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-              <pre className="whitespace-pre-wrap">{parsed.tableMarkdown}</pre>
-            </div>
-          </Card>
-        ) : null}
         <div className="overflow-auto border rounded">
           <Table>
             <TableHeader>
@@ -63,50 +72,60 @@ export default function ResultsPage() {
                 <TableHead>Preferred</TableHead>
                 <TableHead>Neutral</TableHead>
                 <TableHead>Not Preferred</TableHead>
+                <TableHead>Alternates</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {parsed.rankedCourses.map((c: any, idx: number) => (
-                <TableRow key={idx}>
-                  <TableCell className="font-mono">{c.code}</TableCell>
-                  <TableCell>{c.title}</TableCell>
-                  <TableCell className="text-xs text-muted-foreground max-w-xl whitespace-pre-wrap">{c.reasoning || ''}</TableCell>
-                  <TableCell className="text-xs">
-                    {Array.isArray(c.recommendedSections?.preferred) ? (
-                      <div className="space-y-1">
-                        {c.recommendedSections.preferred.map((p: any, i: number) => (
-                          <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
-                        ))}
-                      </div>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-xs">
-                    {Array.isArray(c.recommendedSections?.neutral) ? (
-                      <div className="space-y-1">
-                        {c.recommendedSections.neutral.map((p: any, i: number) => (
-                          <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
-                        ))}
-                      </div>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-xs">
-                    {Array.isArray(c.recommendedSections?.notPreferred) ? (
-                      <div className="space-y-1">
-                        {c.recommendedSections.notPreferred.map((p: any, i: number) => (
-                          <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
-                        ))}
-                      </div>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-xs">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button className="underline underline-offset-2">Details</button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle className="font-mono">{c.code} — {c.title}</DialogTitle>
-                          <DialogDescription>
+              {allCourses.map((c: any, idx: number) => (
+                  <TableRow key={idx}>
+                    <TableCell className="font-mono">{c.code}</TableCell>
+                    <TableCell>{c.title}</TableCell>
+                    <TableCell className="text-xs text-muted-foreground max-w-xl whitespace-pre-wrap">{c.reasoning || ''}</TableCell>
+                    <TableCell className="text-xs">
+                      {Array.isArray(c.recommendedSections?.preferred) ? (
+                        <div className="space-y-1">
+                          {c.recommendedSections.preferred.map((p: any, i: number) => (
+                            <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      {Array.isArray(c.recommendedSections?.neutral) ? (
+                        <div className="space-y-1">
+                          {c.recommendedSections.neutral.map((p: any, i: number) => (
+                            <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      {Array.isArray(c.recommendedSections?.notPreferred) ? (
+                        <div className="space-y-1">
+                          {c.recommendedSections.notPreferred.map((p: any, i: number) => (
+                            <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      {Array.isArray(c.recommendedSections?.alternates) ? (
+                        <div className="space-y-1">
+                          {c.recommendedSections.alternates.map((p: any, i: number) => (
+                            <div key={i}>{typeof p === 'string' ? p : p.lsCode}</div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button className="underline underline-offset-2">Details</button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle className="font-mono">{c.code} — {c.title}</DialogTitle>
+                            <DialogDescription>
                             <div className="space-y-4 not-italic">
                               <div>
                                 <div className="text-xs uppercase tracking-wide text-foreground/70 mb-1">Reasoning</div>

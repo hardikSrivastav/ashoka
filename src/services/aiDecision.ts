@@ -51,18 +51,20 @@ export async function aiDecide(indices: Indices, formAnswers: Record<string, unk
     payload.courses.push({ code: course.code, title: course.title, sections });
   }
 
+  const totalCourses = courses.length;
   const system = `You are an academic advisor. Given student preferences and the provided course data, return JSON and include ALL courses.
 Output rules:
-- Return an object with key rankedCourses: an array with length EXACTLY equal to the number of input courses.
-- Each item must be: { code, title, reasoning, recommendedSections: { preferred: [SectionObj..<=N], alternates: [SectionObj..<=2] } }.
-- SectionObj must be: { lsCode, why, evidence }
+- Return an object with key rankedCourses: an array with length EXACTLY ${totalCourses} (the number of input courses), strictly ordered best to worst.
+- Each item must be: { code, title, reasoning, recommendedSections: { preferred: [SectionObj..<=N], neutral: [SectionObj..*], notPreferred: [SectionObj..*] } }.
+ - SectionObj must be: { lsCode, why, evidence }
   - why: one sentence explicitly referencing student preferences (optimize_for, grading_type_preference, class_mode_preference, assessment_preference) and the section’s attributes
   - evidence: compact object including { rating_overall, total_reviews, grading_type, class_mode, extra_credit, faculty_names_or_titles }
-- For each course, select up to N preferred sections (N provided in options) and up to 2 alternates. Do not include other sections.
-- Use: ratings and review counts (prefer more), grading type/mode, extra credit, description/requirements signals, and faculty title/education hints.
-- Penalize missing ratings explicitly in your reasoning and choices.
-- Additionally include a string field tableMarkdown which is a concise markdown table with columns: Code | Title | Reasoning | Preferred | Alternates. Each list should show lsCodes joined by commas. Keep tableMarkdown under 200 rows.
-- Do NOT omit any course.`;
+- For each course, select up to N preferred sections (N provided in options). Additionally, classify any remaining provided sections into either neutral or notPreferred. Do not omit any provided section.
+ - Use: ratings and review counts (prefer more), grading type/mode, extra credit, description/requirements signals, and faculty title/education hints.
+ - Penalize missing ratings explicitly in your reasoning and choices.
+ - Additionally include a string field tableMarkdown which is a concise markdown table with columns: Code | Title | Reasoning | Preferred | Neutral | Not Preferred. Preferred/Neutral/Not Preferred should list lsCodes joined by commas. Keep tableMarkdown under 200 rows.
+ - The rankedCourses array MUST contain ALL provided courses, strictly ordered best to worst.
+ - Do NOT omit any course.`;
 
   const user = JSON.stringify(payload);
   let text = '';
@@ -114,30 +116,60 @@ Output rules:
     throw new Error(`AI did not return valid JSON | len=${text?.length || 0} head="${head}"`);
   }
 
-  // Ensure we include all courses; append missing with placeholders if needed
+  // Normalize: ensure rankedCourses exists and has ALL courses, classify sections buckets
   try {
-    const returnedCodes = new Set<string>((json.rankedCourses ?? []).map((x: any) => x.code));
-    const missing = courses.filter(c => !returnedCodes.has(c.code));
-    for (const m of missing) {
-      json.rankedCourses = json.rankedCourses ?? [];
-      json.rankedCourses.push({
-        code: m.code,
-        title: m.title,
-        reasoning: 'Included by server for completeness; AI omitted this course.',
-        recommendedSections: { preferred: [], neutral: [], notPreferred: [] }
-      });
+    // 1) If model used buckets, flatten to rankedCourses preserving order preferred -> neutral -> notPreferred
+    if (!Array.isArray(json.rankedCourses) && (Array.isArray(json.preferredCourses) || Array.isArray(json.neutralCourses) || Array.isArray(json.notPreferredCourses))) {
+      const flat: any[] = [];
+      const pushAll = (arr?: any[]) => { if (Array.isArray(arr)) for (const x of arr) flat.push(x); };
+      pushAll(json.preferredCourses);
+      pushAll(json.neutralCourses);
+      pushAll(json.notPreferredCourses);
+      json.rankedCourses = flat;
     }
-    // Post-process: collapse neutral/notPreferred into alternates and cap lengths
-    for (const rc of json.rankedCourses) {
-      const rs = rc.recommendedSections || {};
+
+    // 2) Ensure all courses are present exactly once
+    const codeToCourse = new Map<string, any>();
+    if (Array.isArray(json.rankedCourses)) {
+      for (const it of json.rankedCourses) {
+        if (it && it.code) codeToCourse.set(it.code, it);
+      }
+    } else {
+      json.rankedCourses = [];
+    }
+    for (const base of courses) {
+      if (!codeToCourse.has(base.code)) {
+        const sect = (payload.courses.find((c: any) => c.code === base.code)?.sections || []) as any[];
+        const preferred = sect.slice(0, options.numPreferredSections).map(s => ({ lsCode: s.lsCode }));
+        const rest = sect.slice(options.numPreferredSections).slice(0, 2).map(s => ({ lsCode: s.lsCode }));
+        json.rankedCourses.push({ code: base.code, title: base.title, reasoning: 'Auto-added to complete ranking.', recommendedSections: { preferred, neutral: [], notPreferred: [], alternates: rest } });
+      }
+    }
+
+    // 3) Trim sections per course and build tableMarkdown
+    const capCourse = (course: any) => {
+      const rs = course.recommendedSections || {};
       const preferred = Array.isArray(rs.preferred) ? rs.preferred.slice(0, options.numPreferredSections) : [];
-      const alternatesRaw = [] as any[];
-      if (Array.isArray(rs.alternates)) alternatesRaw.push(...rs.alternates);
-      if (Array.isArray(rs.neutral)) alternatesRaw.push(...rs.neutral);
-      if (Array.isArray(rs.notPreferred)) alternatesRaw.push(...rs.notPreferred);
-      const alternates = alternatesRaw.slice(0, 2);
-      rc.recommendedSections = { preferred, alternates };
+      const neutral = Array.isArray(rs.neutral) ? rs.neutral : [];
+      const notPreferred = Array.isArray(rs.notPreferred) ? rs.notPreferred : [];
+      const alternates = Array.isArray(rs.alternates) ? rs.alternates.slice(0, 2) : [];
+      course.recommendedSections = { preferred, neutral, notPreferred, alternates };
+      return course;
+    };
+    json.rankedCourses = json.rankedCourses.map(capCourse);
+
+    const tableHeader = 'Code | Title | Reasoning | Preferred | Neutral | Not Preferred\n--|--|--|--|--|--\n';
+    const rows: string[] = [];
+    for (const it of json.rankedCourses as any[]) {
+      const pref = (it.recommendedSections?.preferred || []).map((p: any) => (typeof p === 'string' ? p : p.lsCode)).join(', ');
+      const neu = (it.recommendedSections?.neutral || []).map((p: any) => (typeof p === 'string' ? p : p.lsCode)).join(', ');
+      const notp = (it.recommendedSections?.notPreferred || []).map((p: any) => (typeof p === 'string' ? p : p.lsCode)).join(', ');
+      rows.push(`${it.code} | ${it.title?.replace(/\|/g, '/')} | ${(it.reasoning || '').replace(/\|/g, '/')} | ${pref} | ${neu} | ${notp}`);
     }
-  } catch {}
-  return json;
+    json.tableMarkdown = tableHeader + rows.join('\n');
+
+    return json;
+  } catch {
+    return json;
+  }
 }

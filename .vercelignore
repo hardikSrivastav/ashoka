@@ -14,6 +14,10 @@ front/node_modules/
 dist/
 !front/dist/
 
+# Compiled JavaScript files (Vercel handles TS compilation)
+api/*.js
+*.js.map
+
 # IDE files
 .vscode/
 .idea/

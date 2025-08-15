@@ -1,58 +1,36 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "front/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/health",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/courses",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/sections",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/faculties",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/recommendations",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/admin",
-      "dest": "/api/index.ts"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/front/$1"
-    }
-  ],
+  "buildCommand": "cd front && npm run build",
+  "outputDirectory": "front/dist",
+  "installCommand": "npm install && cd front && npm install",
   "functions": {
     "api/index.ts": {
       "maxDuration": 30
     }
   },
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "rewrites": [
+    {
+      "source": "/health",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/courses",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/sections",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/faculties",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/recommendations",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/admin",
+      "destination": "/api/index.ts"
+    }
+  ]
 }
