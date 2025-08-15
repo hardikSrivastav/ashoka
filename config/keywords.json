@@ -1,0 +1,8 @@
+{
+  "projects": ["project", "presentation", "group work", "capstone"],
+  "exams": ["exam", "midterm", "final", "quiz", "test"],
+  "assignments": ["assignment", "weekly assignment", "problem set", "pset", "homework"],
+  "reading_load": ["reading", "book", "article", "paper", "weekly readings"],
+  "discussion_seminar": ["discussion", "seminar", "participation", "debate"],
+  "labs": ["lab", "laboratory", "practical"]
+}

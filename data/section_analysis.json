@@ -1,0 +1,466 @@
+{
+  "FC-0201-1": {
+    "lsCode": "FC-0201-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0201-2": {
+    "lsCode": "FC-0201-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0201-3": {
+    "lsCode": "FC-0201-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0201-4": {
+    "lsCode": "FC-0201-4",
+    "rigor_level": "low",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "exams": "likely final exam",
+      "papers": "possible short papers",
+      "participation": "minimal requirements"
+    },
+    "workload_estimate": "low",
+    "confidence": 0.4
+  },
+  "FC-0201-5": {
+    "lsCode": "FC-0201-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0201-6": {
+    "lsCode": "FC-0201-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0503-1": {
+    "lsCode": "FC-0503-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0503-2": {
+    "lsCode": "FC-0503-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0503-3": {
+    "lsCode": "FC-0503-3",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "reading_reports": 60,
+      "group_presentation": 15,
+      "final_paper": 25
+    },
+    "workload_estimate": "high",
+    "confidence": 0.9
+  },
+  "FC-0503-4": {
+    "lsCode": "FC-0503-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0503-5": {
+    "lsCode": "FC-0503-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "readings": "significant",
+      "discussions": "high",
+      "theoretical_understanding": "high",
+      "experimental_analysis": "medium",
+      "formal_assessments": "unclear"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.8
+  },
+  "FC-0503-6": {
+    "lsCode": "FC-0503-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0306-1": {
+    "lsCode": "FC-0306-1",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "problem_solving": 0.5,
+      "mathematical_exercises": 0.3,
+      "algorithmic_assignments": 0.2
+    },
+    "workload_estimate": "high",
+    "confidence": 0.85
+  },
+  "FC-0306-2": {
+    "lsCode": "FC-0306-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0306-3": {
+    "lsCode": "FC-0306-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0306-4": {
+    "lsCode": "FC-0306-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0306-5": {
+    "lsCode": "FC-0306-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "exams": "likely",
+      "homework": "regular",
+      "projects": "possible",
+      "participation": "minimal"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0306-6": {
+    "lsCode": "FC-0306-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "exams": "likely",
+      "homework": "regular",
+      "projects": "possible",
+      "participation": "minimal"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0102-1": {
+    "lsCode": "FC-0102-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0102-2": {
+    "lsCode": "FC-0102-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0102-3": {
+    "lsCode": "FC-0102-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0102-4": {
+    "lsCode": "FC-0102-4",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "essay": "major component",
+      "class_participation": "significant component",
+      "readings": "extensive required reading list"
+    },
+    "workload_estimate": "high",
+    "confidence": 0.9
+  },
+  "FC-0102-5": {
+    "lsCode": "FC-0102-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "class_discussion": "likely high",
+      "essays": "likely high",
+      "critical_analysis": "likely high",
+      "exams": "likely low"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.7
+  },
+  "FC-0102-6": {
+    "lsCode": "FC-0102-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-1": {
+    "lsCode": "FC-0801-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-2": {
+    "lsCode": "FC-0801-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-3": {
+    "lsCode": "FC-0801-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-4": {
+    "lsCode": "FC-0801-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-5": {
+    "lsCode": "FC-0801-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "likely_components": [
+        "written exams",
+        "assignments",
+        "class participation"
+      ]
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.8
+  },
+  "FC-0801-6": {
+    "lsCode": "FC-0801-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0801-7": {
+    "lsCode": "FC-0801-7",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "not_specified": true
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.8
+  },
+  "FC-0701-1": {
+    "lsCode": "FC-0701-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "essays": "60%",
+      "participation": "20%",
+      "reading_responses": "20%"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0701-2": {
+    "lsCode": "FC-0701-2",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "class_participation": "significant",
+      "reading_load": "heavy",
+      "critical_analysis": "extensive",
+      "written_work": "likely substantial"
+    },
+    "workload_estimate": "high",
+    "confidence": 0.9
+  },
+  "FC-0701-3": {
+    "lsCode": "FC-0701-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0701-4": {
+    "lsCode": "FC-0701-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "essays": "60%",
+      "participation": "20%",
+      "reading_responses": "20%"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0701-5": {
+    "lsCode": "FC-0701-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0601-1": {
+    "lsCode": "FC-0601-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0601-2": {
+    "lsCode": "FC-0601-2",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "reading_comprehension": "40%",
+      "class_discussion": "30%",
+      "analytical_writing": "30%"
+    },
+    "workload_estimate": "high",
+    "confidence": 0.9
+  },
+  "FC-0601-3": {
+    "lsCode": "FC-0601-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0601-4": {
+    "lsCode": "FC-0601-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0601-5": {
+    "lsCode": "FC-0601-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0601-6": {
+    "lsCode": "FC-0601-6",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-1": {
+    "lsCode": "FC-0412-1",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-2": {
+    "lsCode": "FC-0412-2",
+    "rigor_level": "medium",
+    "attendance_strictness": "low",
+    "assessment_mix": {
+      "essays": "likely",
+      "discussions": "likely",
+      "exams": "possible",
+      "presentations": "possible"
+    },
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-3": {
+    "lsCode": "FC-0412-3",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-4": {
+    "lsCode": "FC-0412-4",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-5": {
+    "lsCode": "FC-0412-5",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  },
+  "FC-0412-6": {
+    "lsCode": "FC-0412-6",
+    "rigor_level": "high",
+    "attendance_strictness": "medium",
+    "assessment_mix": {
+      "critical_reading": 30,
+      "source_analysis": 25,
+      "synthesis_writing": 25,
+      "class_participation": 20
+    },
+    "workload_estimate": "high",
+    "confidence": 0.85
+  },
+  "FC-0412-7": {
+    "lsCode": "FC-0412-7",
+    "rigor_level": "medium",
+    "attendance_strictness": "medium",
+    "assessment_mix": {},
+    "workload_estimate": "medium",
+    "confidence": 0.6
+  }
+}

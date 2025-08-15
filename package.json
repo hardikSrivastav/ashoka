@@ -1,0 +1,35 @@
+{
+  "name": "fc_tinder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
+    "@fastify/cors": "^11.1.0",
+    "anthropic": "^0.0.0",
+    "chokidar": "^4.0.3",
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.2.1",
+    "fastify": "^5.5.0",
+    "openai": "^5.12.2",
+    "pino": "^9.9.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}

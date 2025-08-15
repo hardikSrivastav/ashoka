@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark-native design system */
+    --background: 217 19% 8%;
+    --foreground: 215 25% 96%;
+
+    --card: 219 20% 10%;
+    --card-foreground: 215 25% 96%;
+
+    --popover: 219 20% 10%;
+    --popover-foreground: 215 25% 96%;
+
+    --primary: 142 86% 58%;
+    --primary-foreground: 217 19% 8%;
+
+    --secondary: 217 19% 15%;
+    --secondary-foreground: 215 25% 85%;
+
+    --muted: 217 19% 12%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 265 84% 72%;
+    --accent-foreground: 217 19% 8%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 215 25% 96%;
+
+    --border: 217 19% 18%;
+    --input: 217 19% 15%;
+    --ring: 142 86% 58%;
+
+    --radius: 0.75rem;
+
+    /* Table specific colors */
+    --table-header: 217 19% 12%;
+    --table-row-even: 217 19% 9%;
+    --table-row-odd: 217 19% 11%;
+    --table-border: 217 19% 20%;
+    
+    /* Status colors */
+    --status-active: 142 86% 58%;
+    --status-inactive: 25 95% 65%;
+
+    --sidebar-background: 217 19% 10%;
+    --sidebar-foreground: 215 25% 85%;
+    --sidebar-primary: 142 86% 58%;
+    --sidebar-primary-foreground: 217 19% 8%;
+    --sidebar-accent: 217 19% 15%;
+    --sidebar-accent-foreground: 215 25% 85%;
+    --sidebar-border: 217 19% 18%;
+    --sidebar-ring: 142 86% 58%;
+  }
+
+  .dark {
+    /* Same as root for dark-native */
+    --background: 217 19% 8%;
+    --foreground: 215 25% 96%;
+    --card: 219 20% 10%;
+    --card-foreground: 215 25% 96%;
+    --popover: 219 20% 10%;
+    --popover-foreground: 215 25% 96%;
+    --primary: 142 86% 58%;
+    --primary-foreground: 217 19% 8%;
+    --secondary: 217 19% 15%;
+    --secondary-foreground: 215 25% 85%;
+    --muted: 217 19% 12%;
+    --muted-foreground: 215 15% 65%;
+    --accent: 265 84% 72%;
+    --accent-foreground: 217 19% 8%;
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 215 25% 96%;
+    --border: 217 19% 18%;
+    --input: 217 19% 15%;
+    --ring: 142 86% 58%;
+    --table-header: 217 19% 12%;
+    --table-row-even: 217 19% 9%;
+    --table-row-odd: 217 19% 11%;
+    --table-border: 217 19% 20%;
+    --status-active: 142 86% 58%;
+    --status-inactive: 25 95% 65%;
+    --sidebar-background: 217 19% 10%;
+    --sidebar-foreground: 215 25% 85%;
+    --sidebar-primary: 142 86% 58%;
+    --sidebar-primary-foreground: 217 19% 8%;
+    --sidebar-accent: 217 19% 15%;
+    --sidebar-accent-foreground: 215 25% 85%;
+    --sidebar-border: 217 19% 18%;
+    --sidebar-ring: 142 86% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+  }
+
+  html {
+    @apply dark;
+  }
+}

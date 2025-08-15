@@ -1,0 +1,7 @@
+{
+  "Computer Science": {"quantitative_reasoning": 0.9, "projects": 0.8, "exams": 0.6, "analytic_writing": 0.3, "discussion_seminar": 0.3, "reading_load": 0.4},
+  "Economics": {"quantitative_reasoning": 0.8, "exams": 0.7, "analytic_writing": 0.5, "projects": 0.5, "discussion_seminar": 0.4, "reading_load": 0.5},
+  "Literature": {"analytic_writing": 0.9, "reading_load": 0.8, "discussion_seminar": 0.7, "projects": 0.3, "exams": 0.4, "quantitative_reasoning": 0.2},
+  "Political Science": {"analytic_writing": 0.7, "discussion_seminar": 0.7, "reading_load": 0.6, "projects": 0.5, "exams": 0.5, "quantitative_reasoning": 0.4},
+  "Undecided": {"balance": 1.0}
+}

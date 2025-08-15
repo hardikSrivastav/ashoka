@@ -1,0 +1,16 @@
+I'm not storing your data. It takes too much time to set up a database.
+
+I have taken the data for this from:
+
+1. Ashoka faculty directory and
+2. Ashoka student dashboard and 
+3. the student government portal for course ratings. 
+
+These sources have been scraped. No data is sourced ethically. 
+
+Just let me know if you want the data removed. I'll probably not remove it, but points for trying.
+
+It's costing me $1 per request, please be worth ₹90 atle    ast. 
+
+My company: ceneca.ai
+Pay me: ceneca.ai/waitlist
