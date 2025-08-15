@@ -32,7 +32,8 @@ chmod +x dist/index.js
 
 # Update service file with correct working directory
 echo "⚙️ Updating service file..."
-sed -i "s|WorkingDirectory=.*|WorkingDirectory=$CURRENT_DIR|" fc-tinder.service
+sed -i "s|WorkingDirectory=.*|WorkingDirectory=/ashoka|" fc-tinder.service
+sed -i "s|ExecStart=.*|ExecStart=/usr/bin/node /ashoka/dist/index.js|" fc-tinder.service
 
 # Install systemd service
 echo "⚙️ Installing systemd service..."
