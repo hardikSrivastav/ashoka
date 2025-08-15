@@ -17,6 +17,10 @@ export default defineConfig(({ mode }) => ({
       "/admin": "http://localhost:3000"
     }
   },
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+  },
   plugins: [
     react(),
     mode === 'development' &&
