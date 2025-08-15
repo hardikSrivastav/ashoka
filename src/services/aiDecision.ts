@@ -1,18 +1,15 @@
-// AI-driven decision maker: bundles all relevant section/course info and
-// asks the LLM to rank base courses and pick preferred sections.
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const AnthropicModule = (() => { try { const m = require('@anthropic-ai/sdk'); return m.default ?? m; } catch { return null; } })();
+// AI-driven decision maker: bundles relevant section/course info and asks
+// OpenAI to rank base courses and pick preferred sections, returning JSON.
 import fs from 'fs';
 import path from 'path';
+import OpenAI from 'openai';
 
 import type { Indices } from './indices';
 
 export async function aiDecide(indices: Indices, formAnswers: Record<string, unknown>, options: { numPreferredSections: number }) {
-  if (!AnthropicModule) throw new Error('Anthropic SDK not installed');
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
-  const anthropic = new (AnthropicModule as any)({ apiKey });
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error('OPENAI_API_KEY is not set');
+  const openai = new OpenAI({ apiKey });
 
   // Build a compact, bounded context for the LLM: ACTIVE base courses with a short
   // summary per section (ratings compacted, metadata, and faculty snippets).
@@ -31,7 +28,7 @@ export async function aiDecide(indices: Indices, formAnswers: Record<string, unk
       const tb = rb?.totalReviews ?? 0;
       return tb - ta;
     });
-    const sections = sorted.map(code => {
+    const sections = sorted.slice(0, 6).map(code => {
       const r = indices.ratingsBySection.get(code);
       const s = indices.sectionByLsCode.get(code);
       const fac = (s?.facultyEmails ?? []).map(e => indices.facultyByEmail.get(e)).filter(Boolean) as any[];
@@ -53,13 +50,14 @@ export async function aiDecide(indices: Indices, formAnswers: Record<string, unk
     payload.courses.push({ code: course.code, title: course.title, sections });
   }
 
-  const system = `You are an academic advisor. Given student preferences and the provided course data, return JSON and include ALL courses.
+  const system = `You are an academic advisor. Given student preferences and the provided course data, return ONLY JSON and include ALL courses. Do not include any prose, explanations, code fences, or markdown outside the JSON object.
 Output rules:
 - Return an object with key rankedCourses: an array with length EXACTLY equal to the number of input courses.
-- Each item must be: { code, title, reasoning, recommendedSections: { preferred: [SectionObj..*], neutral: [SectionObj..*], notPreferred: [SectionObj..*] } }.
-- SectionObj must be: { lsCode, why, evidence }
+- Each item must be: { code, title, reasoning, recommendedSections: { preferred: [PreferredItem..*], neutral: [NeutralItem..*], notPreferred: [NeutralItem..*] } }.
+- PreferredItem must be an object: { lsCode, why, evidence }.
   - why: one sentence explicitly referencing student preferences (optimize_for, grading_type_preference, class_mode_preference, assessment_preference) and the section’s attributes
   - evidence: compact object including { rating_overall, total_reviews, grading_type, class_mode, extra_credit, faculty_names_or_titles }
+- NeutralItem may be either a string lsCode or an object { lsCode } for brevity.
 - For each course, you MUST classify EVERY provided section into exactly one of the three buckets (preferred, neutral, notPreferred). Do not omit any provided section.
 - Use: ratings and review counts (prefer more), grading type/mode, extra credit, description/requirements signals, and faculty title/education hints.
 - Penalize missing ratings explicitly in your reasoning and choices.
@@ -67,33 +65,41 @@ Output rules:
 - Do NOT omit any course.`;
 
   const user = JSON.stringify(payload);
-  let msg: any;
+  let text = '';
   try {
-    msg = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-latest',
-      max_tokens: 6000,
+    const comp = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
       temperature: 0,
-      system,
-      messages: [{ role: 'user', content: [{ type: 'text', text: user }] }]
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
     });
+    text = comp.choices?.[0]?.message?.content || '';
   } catch (err: any) {
     const status = err?.status || err?.code || 'unknown';
-    const type = err?.error?.type || err?.name || 'AnthropicError';
+    const type = err?.error?.type || err?.name || 'OpenAIError';
     const msgTxt = err?.message || String(err);
-    throw new Error(`Anthropic request failed | status=${status} type=${type} msg=${msgTxt}`);
+    throw new Error(`OpenAI request failed | status=${status} type=${type} msg=${msgTxt}`);
   }
-  // Extract text content from response
-  const text = Array.isArray(msg.content)
-    ? msg.content.map((c: any) => (c?.type === 'text' ? c.text : '')).join('')
-    : '';
 
   let json: any;
   
-  // Simple parsing attempts
+  // Simple parsing attempts (increasingly aggressive)
+  const fencedStripped = text.replace(/^```[a-zA-Z]*\n|```$/gm, '');
+  const trailingFixed = fencedStripped.replace(/,(\s*[}\]])/g, '$1');
+  const slicedBraces = (() => {
+    const start = trailingFixed.indexOf('{');
+    const end = trailingFixed.lastIndexOf('}');
+    if (start !== -1 && end !== -1 && end > start) return trailingFixed.slice(start, end + 1);
+    return trailingFixed;
+  })();
   const parseAttempts = [
-    text, // Raw text
-    text.replace(/^```[a-zA-Z]*\n|```$/gm, ''), // Strip code fences
-    text.replace(/,(\s*[}\]])/g, '$1'), // Remove trailing commas
+    text,
+    fencedStripped,
+    trailingFixed,
+    slicedBraces,
   ];
 
   for (const attempt of parseAttempts) {
@@ -114,7 +120,7 @@ Output rules:
       fs.writeFileSync(file, text || '', 'utf8');
     } catch {}
     const head = text ? text.slice(0, 200).replace(/\s+/g, ' ').trim() : '';
-    throw new Error(`AI did not return valid JSON | len=${text?.length || 0} head="${head}"`);
+    throw new Error(`OpenAI did not return valid JSON | len=${text?.length || 0} head="${head}"`);
   }
 
   // Ensure we include all courses; append missing with placeholders if needed
