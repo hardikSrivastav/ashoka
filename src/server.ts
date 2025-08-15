@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
+import fs from 'fs';
 // Using Fastify's built-in pino integration via options
 import { registerHealthRoutes } from './routes/health';
 import { registerCourseRoutes } from './routes/courses';
@@ -26,11 +27,12 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
     methods: ['GET', 'POST', 'OPTIONS'] 
   });
 
-  // Serve static files from frontend build
+  // Serve static files from frontend build output
+  const staticRoot = path.join(process.cwd(), 'front', 'dist');
   app.register(fastifyStatic, {
-    root: path.join(__dirname, 'front'),
+    root: staticRoot,
     prefix: '/',
-    decorateReply: false
+    // leave decorateReply as default (true) so reply.sendFile is available
   });
 
   app.addHook('onRequest', async (req, reply) => {
@@ -52,7 +54,17 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
     if (request.url.startsWith('/api/')) {
       return reply.status(404).send({ error: 'Not found' });
     } else {
-      return reply.sendFile('index.html');
+      const canSendFile = typeof (reply as any).sendFile === 'function';
+      if (canSendFile) {
+        return (reply as any).sendFile('index.html');
+      }
+      try {
+        const htmlPath = path.join(staticRoot, 'index.html');
+        const html = fs.readFileSync(htmlPath, 'utf8');
+        return reply.header('content-type', 'text/html').send(html);
+      } catch {
+        return reply.status(404).send({ error: 'Not found' });
+      }
     }
   });
 
