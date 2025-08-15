@@ -1,9 +1,9 @@
 // Lightweight CSV readers to enrich course rows with catalogue and ratings
 // Vite allows importing raw text with ?raw
 // @ts-ignore
-import seleniumCsv from '../../../good csvs/ashoka_courses_selenium.csv?raw';
+import seleniumCsv from '../../../good-csvs/ashoka_courses_selenium.csv?raw';
 // @ts-ignore
-import ratingsCsv from '../../../good csvs/ashoka_course_ratings_fixed.csv?raw';
+import ratingsCsv from '../../../good-csvs/ashoka_course_ratings_fixed.csv?raw';
 
 export interface SectionCatalogue {
   lsCode: string;

@@ -50,14 +50,14 @@
   templates/           # persona/major weight defaults (JSON)
   keywords.json        # assessment alignment lexicon
   scoring_limits.json  # caps/penalties/curve params
-/good csvs             # data directory (existing)
+/good-csvs             # data directory (existing)
 ```
 
 ---
 
 ### Environment variables
 - `PORT` (default: 3000)
-- `CSV_DIR` (default: `good csvs`)
+- `CSV_DIR` (default: `good-csvs`)
 - `OPENAI_API_KEY` (required only if using GPT‑4o for formAnswers)
 - `NODE_ENV` (development/production)
 
@@ -185,7 +185,7 @@ These allow tuning without code changes.
 - Sample `.env`:
 ```
 PORT=3000
-CSV_DIR=good csvs
+CSV_DIR=good-csvs
 OPENAI_API_KEY=sk-...
 ```
 - Create a Postman collection with the above endpoints and example bodies.

@@ -9,7 +9,7 @@ A flexible two-level recommender to help incoming students rank the eight Founda
 
 ---
 
-### Data Sources (good csvs/)
+### Data Sources (good-csvs/)
 - `ashoka-course-schedule.csv` (base course schedule)
   - Columns: `LSNo`, `Code` (`FC-xxxx`), `Title`, `Faculty Names`, `Faculty Emails`, `Status` (ACTIVE/INACTIVE)
   - Use: Identify the eight base FCs to rank; filter to ACTIVE.

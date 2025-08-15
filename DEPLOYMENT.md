@@ -22,7 +22,7 @@ Set the following environment variables in your Vercel dashboard:
 
 ```bash
 NODE_ENV=production
-CSV_DIR=good csvs
+CSV_DIR=good-csvs
 ```
 
 If you're using OpenAI or Anthropic APIs, also set:

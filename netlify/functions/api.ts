@@ -14,7 +14,7 @@ async function getServer() {
   }
 
   try {
-    const csvDir = process.env.CSV_DIR ?? 'good csvs';
+    const csvDir = process.env.CSV_DIR ?? 'good-csvs';
     loadKeywords('config');
 
     if (!indices) {

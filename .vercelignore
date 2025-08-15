@@ -20,7 +20,7 @@ api/*.js
 
 # Include config files and data
 !config/
-!good csvs/
+!good-csvs/
 
 # IDE files
 .vscode/

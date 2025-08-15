@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { Card } from "@/components/ui/card";
 // @ts-ignore
-import facultyCsv from '../../../good csvs/ashoka_faculty_profiles.csv?raw';
+import facultyCsv from '../../../good-csvs/ashoka_faculty_profiles.csv?raw';
 // @ts-ignore
-import scheduleCsv from '../../../good csvs/ashoka-course-schedule.csv?raw';
+import scheduleCsv from '../../../good-csvs/ashoka-course-schedule.csv?raw';
 import Footer from '@/components/Footer';
 
 function parseCsv(text: string): string[][] {

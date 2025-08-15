@@ -6,7 +6,7 @@ import { loadKeywords } from './services/assessmentTags';
 
 async function main() {
   const port = Number(process.env.PORT ?? 80);
-  const csvDir = process.env.CSV_DIR ?? 'good csvs';
+  const csvDir = process.env.CSV_DIR ?? 'good-csvs';
   loadKeywords('config');
 
   const data = await loadAll(csvDir);
