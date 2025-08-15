@@ -8,7 +8,7 @@ User=root
 WorkingDirectory=/ashoka
 Environment=NODE_ENV=production
 Environment=PORT=80
-Environment=CSV_DIR=good csvs
+Environment="CSV_DIR=good csvs"
 ExecStart=/usr/bin/node /ashoka/dist/index.js
 Restart=always
 RestartSec=10
