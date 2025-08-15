@@ -2,9 +2,11 @@
 
 echo "🚀 Starting FC Tinder deployment..."
 
-# Get current user
+# Get current user and directory
 CURRENT_USER=$(whoami)
+CURRENT_DIR=$(pwd)
 echo "👤 Current user: $CURRENT_USER"
+echo "📁 Current directory: $CURRENT_DIR"
 
 # Build frontend
 echo "📦 Building frontend..."
@@ -27,6 +29,10 @@ cp -r front/dist/* dist/front/
 echo "🔐 Setting permissions..."
 sudo chown -R $CURRENT_USER:$CURRENT_USER dist/
 chmod +x dist/index.js
+
+# Update service file with correct working directory
+echo "⚙️ Updating service file..."
+sed -i "s|WorkingDirectory=.*|WorkingDirectory=$CURRENT_DIR|" fc-tinder.service
 
 # Install systemd service
 echo "⚙️ Installing systemd service..."

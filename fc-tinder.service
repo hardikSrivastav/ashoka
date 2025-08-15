@@ -9,7 +9,7 @@ WorkingDirectory=/home/ubuntu/fc_tinder
 Environment=NODE_ENV=production
 Environment=PORT=80
 Environment=CSV_DIR=good csvs
-ExecStart=/usr/bin/node dist/index.js
+ExecStart=/usr/bin/node /home/ubuntu/fc_tinder/dist/index.js
 Restart=always
 RestartSec=10
 
