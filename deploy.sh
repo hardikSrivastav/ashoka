@@ -2,6 +2,10 @@
 
 echo "🚀 Starting FC Tinder deployment..."
 
+# Get current user
+CURRENT_USER=$(whoami)
+echo "👤 Current user: $CURRENT_USER"
+
 # Build frontend
 echo "📦 Building frontend..."
 cd front
@@ -21,7 +25,7 @@ cp -r front/dist/* dist/front/
 
 # Set proper permissions
 echo "🔐 Setting permissions..."
-sudo chown -R ubuntu:ubuntu dist/
+sudo chown -R $CURRENT_USER:$CURRENT_USER dist/
 chmod +x dist/index.js
 
 # Install systemd service
