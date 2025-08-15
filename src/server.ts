@@ -18,7 +18,8 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
   app.register(cors, { 
     origin: [
       'http://ashokafc.hardiksrivastava.com',
-      'https://www.ashokafc.hardiksrivastava.com',
+      'https://ashokafc.hardiksrivastava.com',
+      'http://13.233.206.38',
       'http://localhost:5173', // for development
       'http://localhost:3000'  // for development
     ], 
@@ -27,7 +28,7 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
 
   // Serve static files from frontend build
   app.register(fastifyStatic, {
-    root: path.join(__dirname, '../front/dist'),
+    root: path.join(__dirname, 'front'),
     prefix: '/'
   });
 

@@ -5,7 +5,7 @@ import { buildIndices, Indices } from './services/indices';
 import { loadKeywords } from './services/assessmentTags';
 
 async function main() {
-  const port = Number(process.env.PORT ?? 3000);
+  const port = Number(process.env.PORT ?? 80);
   const csvDir = process.env.CSV_DIR ?? 'good csvs';
   loadKeywords('config');
 
@@ -16,6 +16,8 @@ async function main() {
 
   const app = buildServer(getIndices, csvDir);
   await app.listen({ port, host: '0.0.0.0' });
+  console.log(`🚀 Server running on http://0.0.0.0:${port}`);
+  console.log(`🌐 Access your app at: http://ashokafc.hardiksrivastava.com`);
 }
 
 main().catch(err => {
