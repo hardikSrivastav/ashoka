@@ -284,7 +284,7 @@ const CourseRecommendation = () => {
               <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/20" />
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="w-full max-w-md text-sm text-foreground border rounded p-4 bg-background shadow-lg">
-                  <div className="font-medium mb-2">Cooking your ranking, here's some ragebait…</div>
+                  <div className="font-medium mb-2">this is running on my laptop so it'll take ~5 mins. Don't close this tab. Till then, here's some ragebait.</div>
                   <div className="italic">{oneLiners[lineIndex] || '…'}</div>
                   <div className="mt-3 h-1 w-full bg-muted rounded">
                     <div className="h-1 bg-primary rounded animate-pulse" style={{ width: '66%' }} />

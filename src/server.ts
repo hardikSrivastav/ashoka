@@ -29,7 +29,8 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
   // Serve static files from frontend build
   app.register(fastifyStatic, {
     root: path.join(__dirname, 'front'),
-    prefix: '/'
+    prefix: '/',
+    decorateReply: false
   });
 
   app.addHook('onRequest', async (req, reply) => {
@@ -49,9 +50,9 @@ export function buildServer(getIndices: () => Indices, csvDir: string) {
   // Serve index.html for all non-API routes (SPA routing)
   app.setNotFoundHandler(async (request, reply) => {
     if (request.url.startsWith('/api/')) {
-      reply.status(404).send({ error: 'Not found' });
+      return reply.status(404).send({ error: 'Not found' });
     } else {
-      reply.sendFile('index.html');
+      return reply.sendFile('index.html');
     }
   });
 
